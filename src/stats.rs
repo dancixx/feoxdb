@@ -118,29 +118,15 @@ impl Statistics {
     }
 
     /// Record a keys operation
-    pub fn record_keys(&self, latency_ns: u64, hit: bool) {
-        self.total_gets.fetch_add(1, Ordering::Relaxed);
+    pub fn record_keys(&self, latency_ns: u64) {
         self.keys_latency_ns
             .fetch_add(latency_ns, Ordering::Relaxed);
-
-        if hit {
-            self.cache_hits.fetch_add(1, Ordering::Relaxed);
-        } else {
-            self.cache_misses.fetch_add(1, Ordering::Relaxed);
-        }
     }
 
     /// Record a values operation
-    pub fn record_values(&self, latency_ns: u64, hit: bool) {
-        self.total_gets.fetch_add(1, Ordering::Relaxed);
+    pub fn record_values(&self, latency_ns: u64) {
         self.values_latency_ns
             .fetch_add(latency_ns, Ordering::Relaxed);
-
-        if hit {
-            self.cache_hits.fetch_add(1, Ordering::Relaxed);
-        } else {
-            self.cache_misses.fetch_add(1, Ordering::Relaxed);
-        }
     }
 
     /// Record an insert operation
